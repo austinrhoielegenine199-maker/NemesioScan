@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NemesioScan</title>  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>  <style>
+  <title>NemesioScan</title>  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <style>
     * {
       box-sizing: border-box;
       margin: 0;
@@ -56,10 +56,6 @@
       cursor: pointer;
     }
 
-    .scan-button:hover {
-      background: #1d4ed8;
-    }
-
     #reader {
       display: none;
       width: 100%;
@@ -95,10 +91,6 @@
       background: #272b36;
       color: white;
       cursor: pointer;
-    }
-
-    .action-button:hover {
-      background: #343a49;
     }
 
     .records {
@@ -174,6 +166,17 @@
 
   </div>  <script>
 
+    const SUPABASE_URL =
+      "https://tabsjzfyocijmrpegaha.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_wAM5TLqZ9sQ6rt7bC7cZjA_kcz6e4zB";
+
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
     let scanner;
 
     function startScanner() {
@@ -191,13 +194,13 @@
           qrbox: 250
         },
 
-        (decodedText) => {
+        async (decodedText) => {
 
-          scanner.stop();
+          await scanner.stop();
 
           reader.style.display = "none";
 
-          showStudent(decodedText);
+          findStudent(decodedText);
 
         },
 
@@ -217,18 +220,34 @@
 
     }
 
-    function showStudent(studentId) {
+    async function findStudent(studentId) {
+
+      const { data, error } = await supabaseClient
+        .from("students")
+        .select("*")
+        .eq("student_id", studentId)
+        .single();
+
+      if (error) {
+
+        alert("Student not found.");
+
+        console.error(error);
+
+        return;
+
+      }
 
       document.getElementById("studentInfo").style.display = "block";
 
-      document.getElementById("studentId").textContent = studentId;
+      document.getElementById("studentId").textContent =
+        data.student_id;
 
-      // Demo data for now
       document.getElementById("studentName").textContent =
-        "Demo Student";
+        data.full_name;
 
       document.getElementById("studentSection").textContent =
-        "Grade 8 - Section A";
+        data.grade_section;
 
     }
 
