@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NemesioScan</title>  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f1117;
+      color: white;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .app {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 30px;
+    }
+
+    .header p {
+      color: #9ca3af;
+      margin-top: 5px;
+    }
+
+    .card {
+      background: #181b24;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid #292d39;
+    }
+
+    .scan-button {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 14px;
+      background: #2563eb;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .scan-button:hover {
+      background: #1d4ed8;
+    }
+
+    .student-info {
+      display: none;
+    }
+
+    .student-info h2 {
+      margin-bottom: 15px;
+    }
+
+    .info {
+      margin: 10px 0;
+      color: #d1d5db;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .action-button {
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: #272b36;
+      color: white;
+      cursor: pointer;
+    }
+
+    .action-button:hover {
+      background: #343a49;
+    }
+
+    #scanner {
+      display: none;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .records {
+      color: #9ca3af;
+      text-align: center;
+      padding: 20px;
+    }
+  </style></head><body>  <div class="app"><div class="header">
+  <h1>NemesioScan</h1>
+  <p>Student Information & Records System</p>
+</div>
+
+<div class="card">
+  <button class="scan-button" onclick="startScanner()">
+    📷 Scan Student ID
+  </button>
+
+  <div id="scanner"></div>
+</div>
+
+<div class="card student-info" id="studentInfo">
+
+  <h2>Student Information</h2>
+
+  <div class="info">
+    <strong>Name:</strong> <span id="studentName">Unknown</span>
+  </div>
+
+  <div class="info">
+    <strong>Student ID:</strong> <span id="studentId">Unknown</span>
+  </div>
+
+  <div class="info">
+    <strong>Grade & Section:</strong> <span id="studentSection">Unknown</span>
+  </div>
+
+  <div class="actions">
+    <button class="action-button" onclick="addIncident()">
+      ➕ Add Incident
+    </button>
+
+    <button class="action-button" onclick="addNote()">
+      📝 Add Note
+    </button>
+
+    <button class="action-button" onclick="viewRecords()">
+      📋 View Records
+    </button>
+
+    <button class="action-button" onclick="positiveRecord()">
+      ⭐ Positive Record
+    </button>
+  </div>
+
+</div>
+
+<div class="card">
+  <h2>Recent Records</h2>
+
+  <div class="records">
+    No records yet.
+  </div>
+</div>
+
+  </div>  <script>
+
+    function startScanner() {
+      alert("Scanner coming next 🔥");
+    }
+
+    function addIncident() {
+      alert("Incident recording coming next.");
+    }
+
+    function addNote() {
+      alert("Notes system coming next.");
+    }
+
+    function viewRecords() {
+      alert("Records system coming next.");
+    }
+
+    function positiveRecord() {
+      alert("Positive record system coming next.");
+    }
+
+  </script></body>
+</html>
