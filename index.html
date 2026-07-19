@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NemesioScan</title>  <style>
+  <title>NemesioScan</title>  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>  <style>
     * {
       box-sizing: border-box;
       margin: 0;
@@ -60,6 +60,14 @@
       background: #1d4ed8;
     }
 
+    #reader {
+      display: none;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
     .student-info {
       display: none;
     }
@@ -93,14 +101,6 @@
       background: #343a49;
     }
 
-    #scanner {
-      display: none;
-      width: 100%;
-      margin-top: 20px;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
     .records {
       color: #9ca3af;
       text-align: center;
@@ -112,11 +112,13 @@
 </div>
 
 <div class="card">
+
   <button class="scan-button" onclick="startScanner()">
     📷 Scan Student ID
   </button>
 
-  <div id="scanner"></div>
+  <div id="reader"></div>
+
 </div>
 
 <div class="card student-info" id="studentInfo">
@@ -124,18 +126,22 @@
   <h2>Student Information</h2>
 
   <div class="info">
-    <strong>Name:</strong> <span id="studentName">Unknown</span>
+    <strong>Name:</strong>
+    <span id="studentName">Unknown</span>
   </div>
 
   <div class="info">
-    <strong>Student ID:</strong> <span id="studentId">Unknown</span>
+    <strong>Student ID:</strong>
+    <span id="studentId">Unknown</span>
   </div>
 
   <div class="info">
-    <strong>Grade & Section:</strong> <span id="studentSection">Unknown</span>
+    <strong>Grade & Section:</strong>
+    <span id="studentSection">Unknown</span>
   </div>
 
   <div class="actions">
+
     <button class="action-button" onclick="addIncident()">
       ➕ Add Incident
     </button>
@@ -151,38 +157,121 @@
     <button class="action-button" onclick="positiveRecord()">
       ⭐ Positive Record
     </button>
+
   </div>
 
 </div>
 
 <div class="card">
+
   <h2>Recent Records</h2>
 
   <div class="records">
     No records yet.
   </div>
+
 </div>
 
   </div>  <script>
 
+    let scanner;
+
     function startScanner() {
-      alert("Scanner coming next 🔥");
+
+      const reader = document.getElementById("reader");
+
+      reader.style.display = "block";
+
+      scanner = new Html5Qrcode("reader");
+
+      scanner.start(
+        { facingMode: "environment" },
+        {
+          fps: 10,
+          qrbox: 250
+        },
+
+        (decodedText) => {
+
+          scanner.stop();
+
+          reader.style.display = "none";
+
+          showStudent(decodedText);
+
+        },
+
+        (errorMessage) => {
+
+          // Scanner is still searching
+
+        }
+
+      ).catch((error) => {
+
+        alert("Camera permission is required.");
+
+        console.error(error);
+
+      });
+
+    }
+
+    function showStudent(studentId) {
+
+      document.getElementById("studentInfo").style.display = "block";
+
+      document.getElementById("studentId").textContent = studentId;
+
+      // Demo data for now
+      document.getElementById("studentName").textContent =
+        "Demo Student";
+
+      document.getElementById("studentSection").textContent =
+        "Grade 8 - Section A";
+
     }
 
     function addIncident() {
-      alert("Incident recording coming next.");
+
+      const reason = prompt("What incident happened?");
+
+      if (reason) {
+
+        alert("Incident recorded:\n" + reason);
+
+      }
+
     }
 
     function addNote() {
-      alert("Notes system coming next.");
+
+      const note = prompt("Enter a note:");
+
+      if (note) {
+
+        alert("Note recorded:\n" + note);
+
+      }
+
     }
 
     function viewRecords() {
-      alert("Records system coming next.");
+
+      alert("Student records will appear here.");
+
     }
 
     function positiveRecord() {
-      alert("Positive record system coming next.");
+
+      const reason = prompt("Enter positive record:");
+
+      if (reason) {
+
+        alert("Positive record added:\n" + reason);
+
+      }
+
     }
 
   </script></body>
